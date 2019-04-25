@@ -1,0 +1,29 @@
+import tensorflow as tf
+import numpy as np
+tf.enable_eager_execution()
+
+# Data
+x_data = [1, 2, 3, 4, 5] # x=입력값
+y_data = [1, 2, 3, 4, 5] # y=출력값
+
+# W, b initialize
+W = tf.Variable(2.9) # 초기값을 임의로 (2.9)로 지정
+b = tf.Variable(0.5) # 초기값을 임의로 (0.5)로 지정
+
+# W, b update
+for i in range(100): #100번 수행
+    # Gradient descent # 경사하강 알고리즘
+    with tf.GradientTape() as tape: # 변수들에 대한 정보를 Tape에 기록
+        hypothesis = W * x_data + b
+        cost = tf.reduce_mean(tf.square(hypothesis - y_data))
+    W_grad, b_grad = tape.gradient(cost, [W, b]) # grad를 출력
+    W.assign_sub(learning_rate * W_grad) # 뺀 값을 다시 그 값에 할당 (Python에서 -=) 
+    b.assign_sub(learning_rate * b_grad) # learning_rate 값은 grad 값을 얼마나 반영할지 결정
+    if i % 10 == 0:
+      print("{:5}|{:10.4f}|{:10.4f}|{:10.6f}".format(i, W.numpy(), b.numpy(), cost)) # i값이 10의 배수가 될때마다 출력
+
+print()
+
+# predict
+print(W * 5 + b) # X에 5를 대입 출력값이 맞는지 확인
+print(W * 2.5 + b) # X에 2.5를 대입
