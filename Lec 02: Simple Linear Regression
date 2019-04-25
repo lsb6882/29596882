@@ -1,6 +1,6 @@
-import tensorflow as tf
-import numpy as np
-tf.enable_eager_execution()
+import tensorflow as tf  # tensorflow 실행
+import numpy as np # numpy실행
+tf.enable_eager_execution() 
 
 # Data
 x_data = [1, 2, 3, 4, 5] # x=입력값
